@@ -69,3 +69,63 @@ void TreeView::on_menu_file_popup_generic()
 	}
 }
 
+/**
+ * init_treeview
+ */
+void TreeView::init_treeview (DPContainer *c)
+{
+	Gtk::TreeModel::Row row;
+	Gtk::TreeModel::Row childrow;
+
+	//Create the Tree model:
+	m_refTreeModel = Gtk::TreeStore::create (m_Columns);
+	set_model (m_refTreeModel);
+
+	//All the items to be reordered with drag-and-drop:
+	//set_reorderable();
+
+	std::vector<DPContainer*>::iterator i;
+	for (i = c->children.begin(); i != c->children.end(); i++) {
+		DPContainer *x = (*i);
+		//std::cout << "name: " << x->name << std::endl;
+		row = *(m_refTreeModel->append());
+		row[m_Columns.m_col_name] = x->name;
+		row[m_Columns.m_col_type] = x->type;
+		row[m_Columns.m_col_size] = x->size;
+		if (x->children.size() > 0) {
+			std::vector<DPContainer*>::iterator j;
+			for (j = x->children.begin(); j != x->children.end(); j++) {
+				DPContainer *y = (*j);
+				//std::cout << "\tchild: " << y->name << std::endl;
+				childrow = *(m_refTreeModel->append (row.children()));
+				childrow[m_Columns.m_col_name] = y->name;
+				childrow[m_Columns.m_col_type] = y->type;
+				childrow[m_Columns.m_col_size] = y->size;
+
+			}
+		}
+	}
+
+	//Add the TreeView's view columns:
+	append_column ("Name", m_Columns.m_col_name);
+	append_column ("Type", m_Columns.m_col_type);
+	append_column ("Size", m_Columns.m_col_size);
+
+	//Connect signal:
+	signal_row_activated().connect (sigc::mem_fun (*this, &TreeView::on_treeview_row_activated));
+}
+
+/**
+ * on_treeview_row_activated
+ */
+void TreeView::on_treeview_row_activated (const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* /* column */)
+{
+#if 0
+	Gtk::TreeModel::iterator iter = m_refTreeModel->get_iter (path);
+	if (iter)
+	{
+		Gtk::TreeModel::Row row = *iter;
+		std::cout << "Row activated: ID=" << row[m_Columns.m_col_id] << ", Name=" << row[m_Columns.m_col_name] << std::endl;
+	}
+#endif
+}

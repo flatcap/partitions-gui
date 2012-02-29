@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "drawingarea.h"
 
 /**
@@ -20,6 +22,7 @@ DrawingArea::~DrawingArea()
  */
 bool DrawingArea::on_draw (const Cairo::RefPtr<Cairo::Context>& cr)
 {
+	//std::cout << __PRETTY_FUNCTION__ << std::endl;
 	Gtk::Allocation allocation = get_allocation();
 	const int width = allocation.get_width();
 	const int height = allocation.get_height();

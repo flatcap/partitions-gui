@@ -14,11 +14,15 @@
 #include "drawingarea.h"
 #include "treeview.h"
 
+class DPContainer;
+
 class DParted : public Gtk::Window
 {
 public:
 	DParted();
 	virtual ~DParted();
+
+	void set_data (DPContainer *c);
 
 protected:
 	Gtk::Button		button1;
@@ -46,24 +50,7 @@ protected:
 	void on_menu_choices_one();
 	void on_menu_choices_two();
 
-	//Signal handlers:
-	void on_button_quit();
-	void on_treeview_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* column);
-
-	//Tree model columns:
-	class ModelColumns : public Gtk::TreeModel::ColumnRecord
-	{
-	public:
-
-		ModelColumns()
-		{ add(m_col_id); add(m_col_name); }
-
-		Gtk::TreeModelColumn<int> m_col_id;
-		Gtk::TreeModelColumn<Glib::ustring> m_col_name;
-	};
-
-	ModelColumns m_Columns;
-	Glib::RefPtr<Gtk::TreeStore> m_refTreeModel;
+	DPContainer *m_c;
 
 private:
 	void init_menubar (void);
@@ -71,7 +58,6 @@ private:
 	void init_toolbar (void);
 	void init_scrolledwindow (void);
 #endif
-	void init_treeview (void);
 };
 
 #endif // _DPARTED_H_

@@ -1,9 +1,9 @@
 CC	= g++
 RM	= rm -fr
 
-SRC	= main.cpp dparted.cpp drawingarea.cpp treeview.cpp
+SRC	= main.cpp dparted.cpp drawingarea.cpp treeview.cpp container.cpp
 
-HDR	= dparted.h drawingarea.h treeview.h
+HDR	= dparted.h drawingarea.h treeview.h container.h
 
 #PACKAGES = atk atkmm-1.6 cairo cairomm-1.0 freetype2 gdkmm-2.4 gdk-pixbuf-2.0 \
 #	   giomm-2.4 glib-2.0 glibmm-2.4 gtkmm-2.4 gtk+-unix-print-2.0 \
@@ -16,6 +16,8 @@ OBJ	= $(SRC:%.cpp=%.o)
 OUT	= dparted
 
 CFLAGS	= -g -Wall
+CFLAGS	+= -I..
+CFLAGS	+= -DGTKMM_DISABLE_DEPRECATED
 
 CFLAGS	+= $(shell pkg-config --cflags $(PACKAGES))
 LDFLAGS += $(shell pkg-config --libs   $(PACKAGES))
