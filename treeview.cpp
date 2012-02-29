@@ -118,14 +118,20 @@ void TreeView::init_treeview (DPContainer *c)
 /**
  * on_treeview_row_activated
  */
-void TreeView::on_treeview_row_activated (const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* /* column */)
+void TreeView::on_treeview_row_activated (const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn *col)
 {
-#if 0
+	std::cout << "Path: " << path.to_string() << std::endl;
+
 	Gtk::TreeModel::iterator iter = m_refTreeModel->get_iter (path);
 	if (iter)
 	{
+		DPContainer *c = NULL;
 		Gtk::TreeModel::Row row = *iter;
-		std::cout << "Row activated: ID=" << row[m_Columns.m_col_id] << ", Name=" << row[m_Columns.m_col_name] << std::endl;
+		std::cout << "Row activated: Name=" << row[m_Columns.m_col_name] << ", Type=" << row[m_Columns.m_col_type] << std::endl;
+
+		c = row[m_Columns.m_col_container];
+		std::cout << typeid(row[m_Columns.m_col_container]).name() << std::endl;
+		std::cout << typeid(c).name() << std::endl;
+		std::cout << "Name=" << c->name << std::endl;
 	}
-#endif
 }

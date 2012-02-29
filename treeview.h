@@ -36,7 +36,7 @@ protected:
 			add(m_col_size);
 		}
 
-		Gtk::TreeModelColumn<Container*>    m_col_container;
+		Gtk::TreeModelColumn<DPContainer*>  m_col_container;
 		Gtk::TreeModelColumn<Glib::ustring> m_col_name;
 		Gtk::TreeModelColumn<Glib::ustring> m_col_type;
 		Gtk::TreeModelColumn<long long>     m_col_size;

@@ -6,10 +6,6 @@
  * Dparted
  */
 DParted::DParted () :
-	button1 ("hello"),
-	button2 ("bye"),
-	button3 ("wibble"),
-	button4 ("hatstand"),
 	m_c (NULL)
 {
 	set_title ("DParted");
@@ -23,7 +19,6 @@ DParted::DParted () :
 
 	grid.set_orientation (Gtk::ORIENTATION_VERTICAL);
 	//grid.set_row_homogeneous (false);
-	grid.add (button1);
 	//grid.add (menubar);
 
 	//Get the menubar and toolbar widgets, and add them to a container widget:
@@ -35,15 +30,11 @@ DParted::DParted () :
 	if (pToolbar)
 		grid.add (*pToolbar);
 
-	grid.add (button2);
 	//grid.add (toolbar);
 	//grid.add (scrolledwindow);
 
 	grid.add (drawingarea);
-	grid.add (button3);
-
 	grid.add (treeview);
-	grid.add (button4);
 
 	show_all();
 }

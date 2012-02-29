@@ -7,7 +7,6 @@
 #include <gtkmm/toolbar.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/statusbar.h>
-#include <gtkmm/button.h>
 
 #include <gtkmm.h>
 
@@ -25,10 +24,6 @@ public:
 	void set_data (DPContainer *c);
 
 protected:
-	Gtk::Button		button1;
-	Gtk::Button		button2;
-	Gtk::Button		button3;
-	Gtk::Button		button4;
 	// GUI
 	Gtk::Grid		grid;
 	Gtk::MenuBar		menubar;
