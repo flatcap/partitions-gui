@@ -37,6 +37,11 @@ DParted::DParted () :
 	grid.add (treeview);
 
 	show_all();
+
+	int width = 0;
+	int height = 0;
+	get_size (width, height);
+	move (1920 - width, 0);
 }
 
 /**
