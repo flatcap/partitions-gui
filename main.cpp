@@ -40,6 +40,10 @@ DPContainer * create_data (void)
 	c->add_child (p8);
 	c->add_child (p9);
 
+	for (int i = 0; i < 40; i++) {
+		c->add_child (p9);
+	}
+
 	return c;
 }
 

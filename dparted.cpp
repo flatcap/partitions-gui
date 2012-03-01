@@ -9,9 +9,11 @@ DParted::DParted () :
 	m_c (NULL)
 {
 	set_title ("DParted");
-	//set_default_size (1800, 900);
+	set_default_size (1024, 800);
 
-	add (grid);
+	add (scrolledwindow);
+
+	scrolledwindow.add (grid);
 
 	init_menubar();
 	//init_toolbar();

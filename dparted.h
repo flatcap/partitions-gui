@@ -28,10 +28,11 @@ protected:
 	Gtk::Grid		grid;
 	Gtk::MenuBar		menubar;
 	//Gtk::Toolbar		toolbar;
-	//Gtk::ScrolledWindow	scrolledwindow;
 	DrawingArea		drawingarea;
 	TreeView		treeview;
 	//Gtk::Statusbar		statusbar;
+
+	Gtk::ScrolledWindow	scrolledwindow;
 
 	Glib::RefPtr<Gtk::UIManager> m_refUIManager;
 	Glib::RefPtr<Gtk::ActionGroup> m_refActionGroup;
