@@ -8,15 +8,15 @@
 TreeView::TreeView()
 {
 	//Fill popup menu:
-	Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem("_Edit"));
+	Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem("_Edit", true));
 	item->signal_activate().connect( sigc::mem_fun(*this, &TreeView::on_menu_file_popup_generic) );
 	m_Menu_Popup.append(*item);
 
-	item = Gtk::manage(new Gtk::MenuItem("_Process"));
+	item = Gtk::manage(new Gtk::MenuItem("_Process", true));
 	item->signal_activate().connect( sigc::mem_fun(*this, &TreeView::on_menu_file_popup_generic) );
 	m_Menu_Popup.append(*item);
 
-	item = Gtk::manage(new Gtk::MenuItem("_Remove"));
+	item = Gtk::manage(new Gtk::MenuItem("_Remove", true));
 	item->signal_activate().connect( sigc::mem_fun(*this, &TreeView::on_menu_file_popup_generic) );
 	m_Menu_Popup.append(*item);
 
@@ -24,6 +24,8 @@ TreeView::TreeView()
 	m_Menu_Popup.show_all();
 
 	set_has_tooltip (true);
+
+	signal_popup_menu().connect (sigc::mem_fun (*this, &TreeView::on_popup_menu));
 }
 
 /**
@@ -31,6 +33,16 @@ TreeView::TreeView()
  */
 TreeView::~TreeView()
 {
+}
+
+/**
+ * on_popup_menu
+ */
+bool TreeView::on_popup_menu (void)
+{
+	m_Menu_Popup.popup (0, 0);
+
+	return true;
 }
 
 /**
@@ -152,7 +164,7 @@ bool TreeView::on_query_tooltip (int x, int y, bool keyboard_tooltip, const Glib
 
 	convert_widget_to_tree_coords (x, y, tx, ty);
 
-	std::cout << "tooltip at (x,y) " << x << "," << y << "-- (tx,ty) " << tx << "," << ty << std::endl;
+	//std::cout << "tooltip at (x,y) " << x << "," << y << "-- (tx,ty) " << tx << "," << ty << std::endl;
 
 	Gtk::TreeModel::Path path;
 

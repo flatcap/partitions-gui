@@ -47,6 +47,7 @@ protected:
 
 	void on_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* column);
 	bool on_query_tooltip (int x, int y, bool keyboard_tooltip, const Glib::RefPtr<Gtk::Tooltip>& tooltip);
+	bool on_popup_menu (void);
 
 private:
 
