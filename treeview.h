@@ -45,7 +45,8 @@ protected:
 	ModelColumns m_Columns;
 	Glib::RefPtr<Gtk::TreeStore> m_refTreeModel;
 
-	void on_treeview_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* column);
+	void on_row_activated(const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn* column);
+	bool on_query_tooltip (int x, int y, bool keyboard_tooltip, const Glib::RefPtr<Gtk::Tooltip>& tooltip);
 
 private:
 

@@ -22,6 +22,8 @@ TreeView::TreeView()
 
 	m_Menu_Popup.accelerate(*this);
 	m_Menu_Popup.show_all();
+
+	set_has_tooltip (true);
 }
 
 /**
@@ -112,13 +114,14 @@ void TreeView::init_treeview (DPContainer *c)
 	append_column ("Size", m_Columns.m_col_size);
 
 	//Connect signal:
-	signal_row_activated().connect (sigc::mem_fun (*this, &TreeView::on_treeview_row_activated));
+	signal_row_activated().connect (sigc::mem_fun (*this, &TreeView::on_row_activated));
+	signal_query_tooltip().connect (sigc::mem_fun (*this, &TreeView::on_query_tooltip));
 }
 
 /**
- * on_treeview_row_activated
+ * on_row_activated
  */
-void TreeView::on_treeview_row_activated (const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn *col)
+void TreeView::on_row_activated (const Gtk::TreeModel::Path& path, Gtk::TreeViewColumn *col)
 {
 	std::cout << "Path: " << path.to_string() << std::endl;
 
@@ -134,4 +137,37 @@ void TreeView::on_treeview_row_activated (const Gtk::TreeModel::Path& path, Gtk:
 		std::cout << typeid(c).name() << std::endl;
 		std::cout << "Name=" << c->name << std::endl;
 	}
+}
+
+/**
+ * on_query_tooltip
+ */
+bool TreeView::on_query_tooltip (int x, int y, bool keyboard_tooltip, const Glib::RefPtr<Gtk::Tooltip>& tooltip)
+{
+	if (keyboard_tooltip)
+		return false;
+
+	int tx = 0;
+	int ty = 0;
+
+	convert_widget_to_tree_coords (x, y, tx, ty);
+
+	std::cout << "tooltip at (x,y) " << x << "," << y << "-- (tx,ty) " << tx << "," << ty << std::endl;
+
+	Gtk::TreeModel::Path path;
+
+	if (get_path_at_pos (tx, ty, path)) {
+#if 0
+		tooltip->set_text (path.to_string());
+#else
+		Gtk::TreeModel::iterator iter = m_refTreeModel->get_iter (path);
+		Gtk::TreeModel::Row row = *iter;
+		tooltip->set_text (row[m_Columns.m_col_name] + ":" + row[m_Columns.m_col_type]);
+#endif
+	} else {
+		// implies mouse over non-data part of textview, e.g. headers
+		tooltip->set_text ("wibble");
+	}
+
+	return true;
 }
