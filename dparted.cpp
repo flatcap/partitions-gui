@@ -9,7 +9,7 @@ DParted::DParted () :
 	m_c (NULL)
 {
 	set_title ("DParted");
-	set_default_size (1024, 800);
+	set_default_size (800, 600);
 
 	add (scrolledwindow);
 
@@ -43,7 +43,8 @@ DParted::DParted () :
 	int width = 0;
 	int height = 0;
 	get_size (width, height);
-	move (1920 - width, 0);
+	move (1920+1440 - width, 900 - height);
+	//move (1920, 0);
 }
 
 /**
