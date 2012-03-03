@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdlib.h>
 
 #include "treeview.h"
 
@@ -83,6 +84,20 @@ void TreeView::on_menu_file_popup_generic()
 	}
 }
 
+
+/**
+ * get_color_as_pixbuf
+ */
+Glib::RefPtr<Gdk::Pixbuf> get_color_as_pixbuf (int width, int height)
+{
+	Glib::RefPtr<Gdk::Pixbuf> pixbuf = Gdk::Pixbuf::create (Gdk::COLORSPACE_RGB, false, 8, width, height);
+
+	int r = random();
+	pixbuf->fill (r);
+
+	return pixbuf;
+}
+
 /**
  * init_treeview
  */
@@ -103,36 +118,44 @@ void TreeView::init_treeview (DPContainer *c)
 		DPContainer *x = (*i);
 		//std::cout << "name: " << x->name << std::endl;
 		row = *(m_refTreeModel->append());
-		row[m_Columns.m_col_icon] = render_icon_pixbuf(Gtk::Stock::DND, Gtk::ICON_SIZE_MENU);
+		row[m_Columns.m_col_icon] = render_icon_pixbuf (Gtk::Stock::DND, Gtk::ICON_SIZE_MENU);
 		row[m_Columns.m_col_name] = x->name;
 		row[m_Columns.m_col_type] = x->type;
 		row[m_Columns.m_col_size] = x->size;
+		row[m_Columns.m_col_colour] = get_color_as_pixbuf (16, 16);
+
 		if (x->children.size() > 0) {
 			std::vector<DPContainer*>::iterator j;
 			for (j = x->children.begin(); j != x->children.end(); j++) {
 				DPContainer *y = (*j);
 				//std::cout << "\tchild: " << y->name << std::endl;
 				childrow = *(m_refTreeModel->append (row.children()));
-				childrow[m_Columns.m_col_icon] = render_icon_pixbuf(Gtk::Stock::MEDIA_RECORD, Gtk::ICON_SIZE_MENU);
+				childrow[m_Columns.m_col_icon] = render_icon_pixbuf (Gtk::Stock::MEDIA_RECORD, Gtk::ICON_SIZE_MENU);
 				childrow[m_Columns.m_col_name] = y->name;
 				childrow[m_Columns.m_col_type] = y->type;
 				childrow[m_Columns.m_col_size] = y->size;
-
+				childrow[m_Columns.m_col_colour] = get_color_as_pixbuf (16, 16);
 			}
 		}
 	}
 
 	//Add the TreeView's view columns:
+	Gtk::TreeView::Column* col = NULL;
 
-	Gtk::TreeView::Column* col = Gtk::manage (new Gtk::TreeView::Column ("Name"));
-
+	col = Gtk::manage (new Gtk::TreeView::Column ("Name"));
 	col->pack_start(m_Columns.m_col_icon, false);
 	col->pack_start(m_Columns.m_col_name, true);
 	append_column(*col);
 
 	//append_column ("Name", m_Columns.m_col_name);
 	append_column ("Type", m_Columns.m_col_type);
-	append_column ("Size", m_Columns.m_col_size);
+	//append_column ("Size", m_Columns.m_col_size);
+
+	col = Gtk::manage (new Gtk::TreeView::Column ("Size"));
+	col->pack_start(m_Columns.m_col_colour, false);
+	col->pack_start(m_Columns.m_col_size,   true);
+	append_column(*col);
+
 
 	//Connect signal:
 	signal_row_activated().connect (sigc::mem_fun (*this, &TreeView::on_row_activated));
