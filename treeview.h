@@ -34,12 +34,14 @@ protected:
 			add(m_col_name);
 			add(m_col_type);
 			add(m_col_size);
+			add(m_col_icon);
 		}
 
 		Gtk::TreeModelColumn<DPContainer*>  m_col_container;
 		Gtk::TreeModelColumn<Glib::ustring> m_col_name;
 		Gtk::TreeModelColumn<Glib::ustring> m_col_type;
 		Gtk::TreeModelColumn<long long>     m_col_size;
+		Gtk::TreeModelColumn< Glib::RefPtr<Gdk::Pixbuf> > m_col_icon;
 	};
 
 	ModelColumns m_Columns;

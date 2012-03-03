@@ -103,6 +103,7 @@ void TreeView::init_treeview (DPContainer *c)
 		DPContainer *x = (*i);
 		//std::cout << "name: " << x->name << std::endl;
 		row = *(m_refTreeModel->append());
+		row[m_Columns.m_col_icon] = render_icon_pixbuf(Gtk::Stock::DND, Gtk::ICON_SIZE_MENU);
 		row[m_Columns.m_col_name] = x->name;
 		row[m_Columns.m_col_type] = x->type;
 		row[m_Columns.m_col_size] = x->size;
@@ -112,6 +113,7 @@ void TreeView::init_treeview (DPContainer *c)
 				DPContainer *y = (*j);
 				//std::cout << "\tchild: " << y->name << std::endl;
 				childrow = *(m_refTreeModel->append (row.children()));
+				childrow[m_Columns.m_col_icon] = render_icon_pixbuf(Gtk::Stock::MEDIA_RECORD, Gtk::ICON_SIZE_MENU);
 				childrow[m_Columns.m_col_name] = y->name;
 				childrow[m_Columns.m_col_type] = y->type;
 				childrow[m_Columns.m_col_size] = y->size;
@@ -121,7 +123,14 @@ void TreeView::init_treeview (DPContainer *c)
 	}
 
 	//Add the TreeView's view columns:
-	append_column ("Name", m_Columns.m_col_name);
+
+	Gtk::TreeView::Column* col = Gtk::manage (new Gtk::TreeView::Column ("Name"));
+
+	col->pack_start(m_Columns.m_col_icon, false);
+	col->pack_start(m_Columns.m_col_name, true);
+	append_column(*col);
+
+	//append_column ("Name", m_Columns.m_col_name);
 	append_column ("Type", m_Columns.m_col_type);
 	append_column ("Size", m_Columns.m_col_size);
 

@@ -16,7 +16,6 @@ OBJ	= $(SRC:%.cpp=%.o)
 OUT	= dparted
 
 CFLAGS	= -g -Wall
-CFLAGS	+= -I..
 CFLAGS	+= -DGTKMM_DISABLE_DEPRECATED
 
 CFLAGS	+= $(shell pkg-config --cflags $(PACKAGES))
