@@ -54,14 +54,14 @@ int main (int argc, char *argv[])
 {
 	DPContainer *c = NULL;
 
-	Gtk::Main kit (argc, argv);
+	Glib::RefPtr<Gtk::Application> kit = Gtk::Application::create(argc, argv, "gui");
 
 	c = create_data();
 	DParted d;
 
 	d.set_data (c);
 
-	Gtk::Main::run (d);
+	kit->run (d);
 
 	return 0;
 }
